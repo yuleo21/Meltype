@@ -4200,6 +4200,7 @@ internal static class CompositionTests
             "わたしは，" or "わたしは," => "私は,",
             "わたしは．" or "わたしは." => "私は.",
             "わたしは，そうです" or "わたしは,そうです" => "私は,そうです",
+            "3こ" => "3個",
             _ => null,
         };
     }
@@ -4225,6 +4226,8 @@ internal static class CompositionTests
         Assert.Equal("私は．", Type("watasiha.").Showing);
         Assert.Equal("私は，そうです", Type("watasiha,soudesu").Showing);
         Assert.Equal("は，", Type("ha,").Showing, "4 文字未満はかなのまま、句読点も設定どおり");
+        // 「，」の隣の数字も変換エンジンに渡す (「、。」の設定と同じ)。渡さないと 3こ が 3個 にならない。
+        Assert.Equal("りんご，3個", Type("ringo,3ko").Showing);
     }
 
     [Test]
